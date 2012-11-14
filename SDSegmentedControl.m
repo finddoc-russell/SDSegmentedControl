@@ -130,6 +130,9 @@ const CGFloat kSDSegmentedControlScrollOffset = 20;
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor
 {
+    if ([backgroundColor isEqual:[UIColor clearColor]]) {
+        self.layer.shadowColor = UIColor.clearColor.CGColor;
+    }
     ((CAShapeLayer *)self.layer).fillColor = backgroundColor.CGColor;
 }
 
