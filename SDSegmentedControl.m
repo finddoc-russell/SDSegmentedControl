@@ -91,6 +91,7 @@ const CGFloat kSDSegmentedControlScrollOffset = 20;
     _animationDuration = kSDSegmentedControlDefaultDuration;
     _arrowSize = kSDSegmentedControlArrowSize;
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.drawArrow = TRUE;
 
     // Reset UIKit original widget
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -739,82 +740,84 @@ const CGFloat kSDSegmentedControlScrollOffset = 20;
     // Add first point
     addPoint(left, point.y);
 
-    if (point.x >= left+width && point.x <= right-width)
-    {
-        // Arrow is completely inside the view
-        addPoint(point.x - width, point.y);
-        addPoint(point.x,         point.y - height);
-        addPoint(point.x + width, point.y);
-    }
-    else
-    {
-        // Just some tricks, to allow correctly cutted arrows and
-        // to have always a proper animation.
-        if (point.x <= left-width)
+    if (self.drawArrow) {
+        if (point.x >= left+width && point.x <= right-width)
         {
-            // Left aligned points
-            addPoint(left + 0.01, point.y);
-            addPoint(left + 0.02, point.y);
-            addPoint(left + 0.03, point.y);
-        }
-        else if (point.x < left+width && point.x > left-width)
-        {
-            // Left cutted arrow
-            [points removeAllObjects]; // Custom first point
-            if (point.x < left)
-            {
-                CGFloat x = width + point.x;
-                addPoint(left,        point.y - x);
-                addPoint(left + 0.01, point.y - x + 0.01);
-                addPoint(left + 0.02, point.y - x + 0.02);
-                addPoint(left + x,    point.y);
-            }
-            else
-            {
-                CGFloat x = width - point.x;
-                addPoint(left,            point.y - x);
-                addPoint(left + 0.01,     point.y - x + 0.01);
-                addPoint(point.x,         point.y - height);
-                addPoint(point.x + width, point.y);
-            }
-        }
-        else if (point.x == CGFLOAT_MAX)
-        {
-            // Centered "arrow", with zero height
-            addPoint(center - width, point.y);
-            addPoint(center,         point.y);
-            addPoint(center + width, point.y);
-        }
-        else if (point.x < right+width && point.x > right-width)
-        {
-            // Right cutted arrow, is like left cutted arrow but:
-            //  * swapped if/else case
-            //  * inverse point order
-            //  * other calculation of x
-            hasCustomLastPoint = YES; // Custom last point
-            if (point.x < right)
-            {
-                CGFloat x = width - (right - point.x);
-                addPoint(point.x - width, point.y);
-                addPoint(point.x,         point.y - height);
-                addPoint(right - 0.01,    point.y - x + 0.01);
-                addPoint(right,           point.y - x);
-            }
-            else
-            {
-                CGFloat x = width + (right - point.x);
-                addPoint(right - x,    point.y);
-                addPoint(right - 0.02, point.y - x + 0.02);
-                addPoint(right - 0.01, point.y - x + 0.01);
-                addPoint(right,        point.y - x);
-            }
+            // Arrow is completely inside the view
+            addPoint(point.x - width, point.y);
+            addPoint(point.x,         point.y - height);
+            addPoint(point.x + width, point.y);
         }
         else
         {
-            // Right aligned points
-            addPoint(right - 0.03, point.y);
-            addPoint(right - 0.02, point.y);
-            addPoint(right - 0.01, point.y);
+            // Just some tricks, to allow correctly cutted arrows and
+            // to have always a proper animation.
+            if (point.x <= left-width)
+            {
+                // Left aligned points
+                addPoint(left + 0.01, point.y);
+                addPoint(left + 0.02, point.y);
+                addPoint(left + 0.03, point.y);
+            }
+            else if (point.x < left+width && point.x > left-width)
+            {
+                // Left cutted arrow
+                [points removeAllObjects]; // Custom first point
+                if (point.x < left)
+                {
+                    CGFloat x = width + point.x;
+                    addPoint(left,        point.y - x);
+                    addPoint(left + 0.01, point.y - x + 0.01);
+                    addPoint(left + 0.02, point.y - x + 0.02);
+                    addPoint(left + x,    point.y);
+                }
+                else
+                {
+                    CGFloat x = width - point.x;
+                    addPoint(left,            point.y - x);
+                    addPoint(left + 0.01,     point.y - x + 0.01);
+                    addPoint(point.x,         point.y - height);
+                    addPoint(point.x + width, point.y);
+                }
+            }
+            else if (point.x == CGFLOAT_MAX)
+            {
+                // Centered "arrow", with zero height
+                addPoint(center - width, point.y);
+                addPoint(center,         point.y);
+                addPoint(center + width, point.y);
+            }
+            else if (point.x < right+width && point.x > right-width)
+            {
+                // Right cutted arrow, is like left cutted arrow but:
+                //  * swapped if/else case
+                //  * inverse point order
+                //  * other calculation of x
+                hasCustomLastPoint = YES; // Custom last point
+                if (point.x < right)
+                {
+                    CGFloat x = width - (right - point.x);
+                    addPoint(point.x - width, point.y);
+                    addPoint(point.x,         point.y - height);
+                    addPoint(right - 0.01,    point.y - x + 0.01);
+                    addPoint(right,           point.y - x);
+                }
+                else
+                {
+                    CGFloat x = width + (right - point.x);
+                    addPoint(right - x,    point.y);
+                    addPoint(right - 0.02, point.y - x + 0.02);
+                    addPoint(right - 0.01, point.y - x + 0.01);
+                    addPoint(right,        point.y - x);
+                }
+            }
+            else
+            {
+                // Right aligned points
+                addPoint(right - 0.03, point.y);
+                addPoint(right - 0.02, point.y);
+                addPoint(right - 0.01, point.y);
+            }
         }
     }
 
