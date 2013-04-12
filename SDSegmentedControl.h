@@ -17,7 +17,6 @@
 @interface SDSegmentedControl : UISegmentedControl <UIScrollViewDelegate>
 
 @property (retain, nonatomic) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
-@property (assign, nonatomic) BOOL drawArrow UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) CGFloat arrowSize UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) CFTimeInterval animationDuration UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) CGFloat interItemSpace UI_APPEARANCE_SELECTOR;
