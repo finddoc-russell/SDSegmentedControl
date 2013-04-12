@@ -17,16 +17,21 @@
 @interface SDSegmentedControl : UISegmentedControl <UIScrollViewDelegate>
 
 @property (retain, nonatomic) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
+@property (retain, nonatomic) UIColor *borderColor UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) CGFloat arrowSize UI_APPEARANCE_SELECTOR;
+@property (assign, nonatomic) CGFloat arrowHeightFactor UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) CFTimeInterval animationDuration UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) CGFloat interItemSpace UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) UIEdgeInsets stainEdgeInsets UI_APPEARANCE_SELECTOR;
+
+@property UIScrollView *scrollView;
 
 @end
 
 @interface SDSegmentView : UIButton
 
 @property (assign, nonatomic) CGSize imageSize UI_APPEARANCE_SELECTOR;
+@property (retain, nonatomic) UIFont *itemFont UI_APPEARANCE_SELECTOR;
 
 @end
 
@@ -37,5 +42,7 @@
 @property (assign, nonatomic) CGSize shadowOffset UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) CGFloat shadowBlur UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) UIColor *shadowColor UI_APPEARANCE_SELECTOR;
+@property (assign, nonatomic) CGFloat innerStrokeLineWidth UI_APPEARANCE_SELECTOR;
+@property (assign, nonatomic) UIColor *innerStrokeColor UI_APPEARANCE_SELECTOR;
 
 @end
